@@ -6,4 +6,63 @@ Python包Pandas学习笔记
   import pandas as pd
 
 2 数据读取(“/”暂作“或”使用)
+    # \s+是利用空白符进行分割,可使用正则表达式匹配
+    # header可以制定列明对应的行数，如果没有就是None
+    # index_col就是行名对应的列数，如果没有也是None
+    # parse_dates日期型列
+    pd.read_csv(path, sep = '\s+'/'\t'/',', header=0/None, usecols=[...], 
+	,parse_dates=[0]/['Date'], index_col=0/None, encoding='utf-8' )
+
+3 数据输出
+    # na_rep是填充的缺失值
+    # header可以给一个list用作数据输出的列名
+    # columns可以给定数字list用于选取输出特定的列
+    pd.to_csv(path, sep='', na_rep='NA', header=True/['xx','xx'], index=True, 
+	columns=[1,2,3..], encoding='utf-8')
+
+4 创建 DataFrame，Series对象
+    
+    # DataFrame和Series都接受list和numpy array数据，若要转换回array可以用df.values或S.values
+    # DataFrame还可以接受dictionary对象
+    df = pd.DataFrame(np.random.rand(10,5),columns=list('ABCDE')) #列名为ABCDE
+    S = pd.Series([1,2,3,4])
+
+5 数据类型总结
+
+    df = pd.DataFrame({'string':list('abc'),
+                       'int64':list(range(1,4)),
+                       'uint8': np.arange(3, 6).astype('u1'),
+                       'float64': np.arange(4.0, 7.0),
+                       'bool1': [True, False, True],
+                       'dates': pd.date_range('now', periods=3).values,
+                       'category': pd.Series(list("ABC")).astype('category')
+                            })
+    
+
+    S.astype(np.int64) # 数据类型转化
+    S.dtype == np.int64 # 数据类型判断
+    S.to_frame() # 将Series数据转换为DataFrame数据
+    pd.to_datetime(df.a) # 将df数据a列转换为datetime类型
+    pd.to_numeric(aDF.loc[:, 'xxx'])  #转换成数字
+    df.apply(lambda x:x)     #将groupby 对象转成DataFrame类型
+
+6 查看数据
+
+    df.head(10) # 查看数据前10行
+    df.tail(10) # 查看数据后10行
+    df.shape    # 数据对应的行列数
+    df.info()   # 数据索引，类型，内存信息
+    df.describe(include = 'all') # 对于数字型数据进行分位数统计,all代表对所有数据类型统计
+    S.value_counts(dropna=False) # 对Series里面的值进行个数统计，NA也会统计
+    df.apply(pd.Series.value_counts) #返回每个值在各列中的个数，没有则用NaN代替
+    df.index # 返回数据的索引
+    df.columns # 返回数据的列名
+    df.mean()/min()/median()/std()/count() # 分别是df的列均值,最小值,中位数,标准差,非空值
+    df.corr() # 列之间的相关系数
+    df.idxmax(0) # 每列最大数对应行的index的名
+    df.idxmax(1) # 每行最大数对应的列名
+    aDF.nsmallest(columns='age', n=20) # 取出年龄最小的20个数据
+    S.is_unique # 确定Series数据是否是unique的, 返回bool值
+
+    
 

@@ -64,5 +64,15 @@ Python包Pandas学习笔记
     aDF.nsmallest(columns='age', n=20) # 取出年龄最小的20个数据
     S.is_unique # 确定Series数据是否是unique的, 返回bool值
 
+    数值型变量
+    # describe函数查看部分变量的分布
+    df.describe()
+  
+    分类变量
+    df.describe(include=[np.object])
+    # count: 非缺失值的个数
+    # unique: 非重复值得个数
+    # top: 最高频值
+    # freq: 最高频值出现次数
     
 

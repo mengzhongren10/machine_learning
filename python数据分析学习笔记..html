@@ -104,6 +104,21 @@ Python包Pandas学习笔记
     df.dropna(axis=0/1, how='any'/'all', thresh=n)   # 移除数据中的缺失行,axis0是行删除,1是列删除
                                                      # any是只要有一个就删除,all是所有的都是才删除
                                                      # thresh目的是大于n个NA才删除
+    S.fillna(x)      #对缺失值进行填充，填充值为x
+    aDF.loc[:,'xx'].fillna(aSeires)    # 对数据进行填充,根据aSeires的index和aDF的index进行填充				    
+    S.astype(np.float) # 数据的类型转换
+    S.replace(1, 'one') # 将1替换为'one'
+    S.replace([1,2], ['one','two']) # 将1替换为one, 2替换为two
+    df.rename(index/columns={'old1':'new1','old2':'new2'}) # 修改行名列名，将old1改为new1，将old2改为new2
+    df.set_index('B') # 修改index，将B所在的列作为行索引
+    df.sort_index() # 将数据按照index进行排序
+    df.sort_values([col1, col2], ascending=[True,False]) # 根据col1和col2的值进行排序，col1是升序，col2是降序
+    S.argsort() # 返回Series对应的值的order，S[S.argsort()]返回的是对应的从小到大的Series数值			    
+    df.reset_index(drop=False/True, inplace=False/True) # 数据的index换成从0开始的, drop是说是否保留原来的index, 保留的话就多一列, inplace是说是否修改原来的df
+    data['Age'] = pd.cut(data['Age'], bins=6, labels=np.arange(6)) # 对数值型数据进行区间分割，分割成6个bin，label用0-5表示
+    np.tile(a, N).flatten() # 对数据a进行重复
+					    
+					    
 					    
 					    
 					    

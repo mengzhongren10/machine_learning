@@ -171,7 +171,41 @@ Python包Pandas学习笔记
      plt.xlabel('xxx', fontsize=18) # 绘制label
      plt.text(0.8, 0.9, 'xxx', color='k', fontsize=15) # 进行注解
      plt.grid(True) # 网格线
+   
 					    
+    3. seaborn绘图
+     sns.displot(x, kde=True, bins=20, rug=True, fit=stats.gamma) # histgram加密度线,样本分布情况, 拟合某些分布fit，适合单变量
+     sns.kdeplot # 类似于上面的,kde是每个样本用正态分布画,如果样本多,高度就高,之后再做归一化
+     sns.jointplot(x,y,data) # 绘制带有histgram以及散点图的图，两个变量
+     sns.pairplot(df) # 直接绘制各个列之间的散点图以及对应的histgram，多个变量	
+     
+     #多图绘制1
+     g = sns.PairGrik(df) # 各个列混合,产出n*n个格子
+     g.map_diag(sns.kdeplot) # 对角线绘制
+     g.map_offdiag(sns.kdeplot, cmap='Blues_d', n_levels=20) # 绘制对角线是kde密度图其他为等高线的图			    
+					    
+     #多图绘制2
+     g = FaceGrid(row=[..],aspect=1.5, data=)           #这个类就是根据子集数据分别实例化对应的坐标轴，然后在坐标轴上绘制出对应的图形
+     g.map(sns.boxplot, x, y, hue, hue_order=[], ...)
+     
+     #多图绘制3					    
+     g = sns.PairGrid(data, x_vars=[], y_vars=[], aspect=0.5, size=3.5)
+     g.map(sns.violinplot, palette='bright') # x_vars数量*y_vars数量个子图，然后每个子图都绘制violinplot
+	
+     #关联分析
+     sns.lmplot(x, y, data) # 散点图+线性回归,95%置信区间,适用于连续值
+		
+     sns.residplot() # 残差图
+     sns.barplot(x,y,hue,ci=None)  # 是否打开置信区间
+     sns.stripplot(x, y, data, jitter =True) # 基于x为离散数据的,类似于散点图的boxplot
+     sns.swarmplot(x, y, data) #  蜂群图，类似于小提琴图的点版				    
+     sns.boxplot()
+     sns.violinplot(bw) # 属于kde以及boxplot的组合，既看了单变量分布，也看了各变量之间的差异				    
+     sns.violinplot(split=True， hue， inner='stick') # split将hue为两个类型的进行拼接绘制小提琴图，stick，每个样本绘制竖线
+     sns.countplot(x, data) # 绘制离散变量数量分布，类似于value_counts()，类似于barplot但是使用的统计量是数量				    
+     sns.pointplot(x, y, hue) # 查看离散变量x以及hue在离散变量y上的差别，使用均值，画点
+     sns.factorplot(x, y, hue, col, data, kind='swarm') # 是一种泛化的绘图函数
+     a.savefig('xx') # 进行图片存储 plt函数				    
 					    
 					    
 					    

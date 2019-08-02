@@ -75,4 +75,39 @@ Python包Pandas学习笔记
     # top: 最高频值
     # freq: 最高频值出现次数
     
+7  数据的截取
+    df.xxx / df['xxx'] #返回数据的某一列，列名为xxx，类型为Series
+    df[['xx','yy']] #选取多列数据，数据类型为DataFrame
+    df.iloc[3] #选取第4行数据
+    df.iloc[[1,2,3],:] #选取多行数据
+    df.loc[['x','y','z'],['a','b','c']] #根据行index名和列名进行数据截取
+    df.ix[..,..] # ix是用行名列名以及行数列数混合赋值的情况下数据的截取
+    df[(df.col>0.5) & (df.col<10)] # 筛选col大于0.5小于10的行返回
+    aDF.loc[(aDF['a']>10) & (aDF['b']<100), :] # 也可以给条件进行筛选,& | ~进行逻辑运算
+    df.values #返回df对应的numpy array值
+    df.values[10][5] #求df数据11行6列的值
+    df[df['xxx'].notnull(), :] = 10 # 对空值赋值	?
+    S.str.startswith('G')   #Seriers以G开头的字符, 返回bool值
+    S != 'xxx'              # Series中不为xxx的位置, 返回bool值
+    S.isin(['a','b','c'])   # 返回bool值如果S在list['a','b','c']中, 返回true
 
+8 数据清洗
+    del df['a'] #删除数据df的a列
+    df.drop(['B','C'],axis=1,inplace=True)  # 删除数据df的B,C列, 在原数据上进行修改
+    df.dropna(how = 'all',axis = 0)   #对行进行操作,如果一行里面全都是na那么就删除,如果要一列里面全是na就删除,那么axis=1
+    df.loc[:, 'newcol'] = 2000        # 如果没有newcol那么就新加一列
+    df['newcol'] = 2000               # df新添加一列
+    df.columns = ['a','b']      # 更改数据的列名
+    df.isnull().sum()           # 统计各列中缺失值的个数
+    df.notnull().sum()          # 统计各列中非缺失值的个数
+    df.drop_duplicates([...], 'first'/'last'/False)   # 移除重复项, list可以是列名也可以是数字序列,first是保留重复中的第一个, last是保留重复中的最后一个, False一个不留, 只要重复都删除
+    df.dropna(axis=0/1, how='any'/'all', thresh=n)   # 移除数据中的缺失行,axis0是行删除,1是列删除
+                                                     # any是只要有一个就删除,all是所有的都是才删除
+                                                     # thresh目的是大于n个NA才删除
+					    
+					    
+					    
+					    
+					    
+					    
+					    

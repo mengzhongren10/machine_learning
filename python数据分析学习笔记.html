@@ -117,7 +117,22 @@ Python包Pandas学习笔记
     df.reset_index(drop=False/True, inplace=False/True) # 数据的index换成从0开始的, drop是说是否保留原来的index, 保留的话就多一列, inplace是说是否修改原来的df
     data['Age'] = pd.cut(data['Age'], bins=6, labels=np.arange(6)) # 对数值型数据进行区间分割，分割成6个bin，label用0-5表示
     np.tile(a, N).flatten() # 对数据a进行重复
-					    
+
+9  数据分组
+    df.groupby(col).size() # 按照col对数据进行分组，并计算每一组的数量, 如果是count的话每列都会计算一次分组后的数量, 比较冗余					    
+    df.groupby([col1, col2]).mean() # 按照col1,col2进行分组，并计算各组的均值				    
+    df.groupby([col1, col2]).agg(['min', 'max', 'mean']) # 按照col1col2进行分组，计算各组之间的min, max, mean				    
+    df.groupby([col1, col2]).agg({'a':'min', 'b':'max', 'c':'mean'}) # 按照col1col2进行分组，计算各组之间的a列的min, b列的max, c列的mean				    
+    df.groupby(col1)[col2].mean() # 计算按照col1分组的col2对应的均值
+    df.pivot.table(index=col1, values=[col2, col3], aggfun='mean') # 以col1的值为index,以col2,col3值为列进行分组计算各元素平均值					    
+    df.apply(np.mean) # 计算每一列的平均值
+    df.apply(np.max, axis=1) #计算每一行的平均值
+    df.applymap(lambda x : x.upper()) # 对多列数据操作, 这里是对各列都大写
+    for name,data in df.groupby('col'):
+	     print name # col列分类后的值
+	     print data # col列名称等于name对应的数据行
+    df.groupby('name').apply(ownfunc) # 可以对不同组进行自定义函数操作
+    df.apply(ownfunc)   #可以对不同列数据进行自定义函数操作
 					    
 					    
 					    

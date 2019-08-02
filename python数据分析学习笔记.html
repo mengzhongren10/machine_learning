@@ -134,9 +134,43 @@ Python包Pandas学习笔记
     df.groupby('name').apply(ownfunc) # 可以对不同组进行自定义函数操作
     df.apply(ownfunc)   #可以对不同列数据进行自定义函数操作
 					    
+10  数据合并
+    df1.append([df2, df3])  # 也可以追加两个DF
+    pd.concat([df1.set_index('a'), df2.set_index('a')], sort=False, axis=1, join='inner') # 和上述利用merge在a字段上进行内连接的效果类似,因为concat是基于index进行连接的,merge可以不基于index,指定字段					    
+    pd.concat([df1, df2], axis=1) #列数相同, 行合在一起
+    pd.concat(frames, keys=['x', 'y', 'z'], axis=0) #行数相同, 列合在一起, 每个数据的来源分别标注xyz
+    pd.merge(df1, df2, on=['key1','key2'], how='outer'/'inner'/'left'/'right') # 合并df1和df2,根据df1的key1和df2的key2, 连接方式是外链接..				    
+    pd.merge(df1, df2, how='inner', left_index=True, right_on='id') # 对数据进行merge,左表以index作为连接关键字,右表用id作为关键字					    
+    np.vstack((a,b)) # 乱入一个numpy合并用法，行合并
 					    
 					    
+11  时序数据操作
+    df.index = pd.date_range('2018/1/1', period=df.shape[0]) # 添加时间序列作为行名
+    pd.to_datetime(df.a, format='%Y') # 将df的a列转化成datetime类型的年				     				    
+    
+    import datetime as dt
+    dt.datetime(2015,1,1) # 通过datetime包定义数据时间
+    dt.datetime.today() # 返回今天对应的时间
 					    
+
+12 绘图命令
+    1. pandas内置绘图 
+    df.plot.bar() # barplot, stacked=True, 堆叠
+    df.plot.barh() # 绘制水平的barplot
+    df.plot.hist(bins = 20) # 绘制直方图,单维度
+    df.plot.box() # 对每列去看一些分布outlier
+    df.plot.area() # 堆叠区域图
+    df.plot.scatter(x='a', y='b') # 散点图
+    df.plot.pie(subplots=True) # 绘制带图例的饼图
+    
+    2. matplotlib绘图的一些设置
+     plt.figure(figsize=(12,8)) # 设置画布大小
+     plt.xticks([2,4,6], [r'a',r'b',r'c']) # 设置坐标轴刻度
+     plt.xlim(1,3) # 设置坐标位置
+     plt.title() # 标题
+     plt.xlabel('xxx', fontsize=18) # 绘制label
+     plt.text(0.8, 0.9, 'xxx', color='k', fontsize=15) # 进行注解
+     plt.grid(True) # 网格线
 					    
 					    
 					    

@@ -63,6 +63,14 @@ Python包Pandas学习笔记
     df.idxmax(1) # 每行最大数对应的列名
     aDF.nsmallest(columns='age', n=20) # 取出年龄最小的20个数据
     S.is_unique # 确定Series数据是否是unique的, 返回bool值
+    df.xxx.unique() # 查看某列中有多少不同的取值
+    df.xxx.nunique()  # 查看不同取值的数量
+    df[df['Rating'].isin([19])]  # 查看某一列的值为‘19’的记录
+    df[df['Content Rating'].values == 'Mature 17+'] # 筛选出某一列的值为‘Mature 17+’的记录
+    df[df['xxx'] > 5000000]      # 筛选出某一列的数值大于某个数的记录
+    df.unstack()      # 将数据的行“旋转”为列
+    df.stack()        # 将数据的列“旋转”为行
+    
 
     数值型变量
     # describe函数查看部分变量的分布
@@ -100,6 +108,9 @@ Python包Pandas学习笔记
     df.columns = ['a','b']      # 更改数据的列名
     df.isnull().sum()           # 统计各列中缺失值的个数
     df.notnull().sum()          # 统计各列中非缺失值的个数
+    df.shape[0] - df.count()    # 统计各列中非缺失值得个数
+    df[df.isnull().values==True]  # 筛选出缺失的部分数据	
+    
     df.drop_duplicates([...], 'first'/'last'/False)   # 移除重复项, list可以是列名也可以是数字序列,first是保留重复中的第一个, last是保留重复中的最后一个, False一个不留, 只要重复都删除
     df.dropna(axis=0/1, how='any'/'all', thresh=n)   # 移除数据中的缺失行,axis0是行删除,1是列删除
                                                      # any是只要有一个就删除,all是所有的都是才删除
@@ -151,7 +162,9 @@ Python包Pandas学习笔记
     import datetime as dt
     dt.datetime(2015,1,1) # 通过datetime包定义数据时间
     dt.datetime.today() # 返回今天对应的时间
-					    
+    
+    s_update = pd.to_datetime(apps['Last Updated'])
+    apps['Update_diff'] = s_update.max() - s_update     #求与最近的时间的时间差
 
 12 绘图命令
     1. pandas内置绘图 
@@ -205,7 +218,12 @@ Python包Pandas学习笔记
      sns.countplot(x, data) # 绘制离散变量数量分布，类似于value_counts()，类似于barplot但是使用的统计量是数量				    
      sns.pointplot(x, y, hue) # 查看离散变量x以及hue在离散变量y上的差别，使用均值，画点
      sns.factorplot(x, y, hue, col, data, kind='swarm') # 是一种泛化的绘图函数
-     a.savefig('xx') # 进行图片存储 plt函数				    
+     a.savefig('xx') # 进行图片存储 plt函数	
+     
+     #绘制热力图，通常都是绘制相关系数矩阵
+     correlation = df[["xxx","yyy"]].corr()
+     fig = plt.figure(figsize = (10, 10))
+     sns.heatmap(correlation, vmax=.8, square=True, annot=True)
 					    
 					    
 					    
